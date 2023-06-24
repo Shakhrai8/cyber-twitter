@@ -11,7 +11,7 @@ CyberTwitter is a small Twitter clone web application built with Ruby, Sinatra, 
 
 ## Deployment
 
-The CyberTwitter application is deployed and can be accessed at [https://chitter-yuhm.onrender.com](https://chitter-yuhm.onrender.com) on Render.
+The CyberTwitter application is deployed and can be accessed at [https://cybertwitter.onrender.com](https://cybertwitter.onrender.com) on Render.
 
 ## Local Development
 
