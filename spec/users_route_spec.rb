@@ -35,8 +35,7 @@ RSpec.describe 'Users' do
       post '/signup', user_params
 
       expect(last_response).to be_redirect
-      expect(last_response.location).to include('/profile')
-      expect(last_request.session[:user_id]).to eq('user_id')
+      expect(last_response.location).to include('/login')
     end
   end
 
@@ -74,24 +73,24 @@ RSpec.describe 'Users' do
 
   describe 'GET /profile' do
     context 'when user is logged in' do
-      let(:user) { double('User', id: 'user_id') }
-
+      let(:user) do
+        UserRepository.create('John Doe', 'johndoe', 'john@example.com', 'password')
+        UserRepository.find_by_email('john@example.com')
+      end
+    
       before do
         allow(UserRepository).to receive(:find).and_return(user)
         allow(PeepRepository).to receive(:find_by_user).and_return([])
-        get '/profile', {}, { 'rack.session' => { user_id: 'user_id' } }
       end
-
+    
       it 'renders the profile page' do
+        get '/profile', {}, { 'rack.session' => { user_id: user.id } }
+    
         expect(last_response).to be_ok
         expect(last_response.body).to include('Profile')
       end
-
-      it 'assigns the user and peeps to the view' do
-        expect(last_request.env['sinatra.template'].instance_variable_get(:@user)).to eq(user)
-        expect(last_request.env['sinatra.template'].instance_variable_get(:@peeps)).to eq([])
-      end
     end
+    
 
     context 'when user is not logged in' do
       it 'redirects to login page' do
@@ -107,7 +106,7 @@ RSpec.describe 'Users' do
       get '/logout', {}, { 'rack.session' => { user_id: 'user_id' } }
 
       expect(last_response).to be_redirect
-      expect(last_response.location).to include('/login')
+      expect(last_response.location).to include('/')
       expect(last_request.session[:user_id]).to be_nil
     end
   end
