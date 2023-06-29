@@ -1,6 +1,5 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #1a1a1a;
   color: #ccc;
 }
 
@@ -35,10 +34,15 @@ h1 {
 }
 
 .feed-container {
-  background-color: #222;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px; /* changed width to max-width */
+  margin: 20px auto; /* changed margin to auto to center it */
+  padding: 0 20px; /* added side padding for smaller screens */
+}
+
+@media screen and (max-width: 800px) {
+  .feed-container {
+    width: 100%; /* make it span the entire width on small screens */
+  }
 }
 
 .create-peep {
@@ -209,4 +213,22 @@ h1 {
   padding: 10px;
   display: none;
   z-index: 999;
+}
+
+canvas {
+  position: fixed; /* Change this to fixed so that it stays in place */
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: -1; /* Set z-index to a negative value to move it behind other content */
+}
+
+.overlay {
+  position: relative; /* Change this to relative so that it respects the normal page flow */
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
