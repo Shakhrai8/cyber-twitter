@@ -140,3 +140,22 @@ canvas {
   align-items: center;
   padding-top: 90px;
 }
+
+@media only screen and (max-width: 800px) {
+  .profile-container,
+  .login-container {
+    width: 90%;
+  }
+  header {
+    flex-direction: column;
+  }
+  h1,
+  h3,
+  h4 {
+    font-size: 18px;
+  }
+  .button {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+}
