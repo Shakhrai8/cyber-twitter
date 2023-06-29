@@ -1,5 +1,5 @@
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   line-height: 1.5;
   background-color: #0e0e0e;
@@ -81,7 +81,6 @@ main {
 .reply-form {
   margin-top: 20px;
 }
-
 
 /* Additional Cyberpunk Styling */
 .signup-container {
