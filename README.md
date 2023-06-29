@@ -2,6 +2,12 @@
 
 CyberTwitter is a small Twitter clone web application built with Ruby, Sinatra, and JavaScript. It allows users to sign up, log in, post "peeps" (tweets), and view a feed of peeps from other users.
 
+## JavaScript Version
+
+If you prefer a JavaScript implementation of this project, you can check out the [JavaScript version](https://github.com/Shakhrai8/frontend-api-challenge). 
+
+The JavaScript version focuses on the frontend and utilizes the provided backend API hosted on Heroku. It offers similar features to the Ruby version, including user account creation, peep posting, peep viewing, and more. Feel free to explore and compare the two implementations.
+
 ## Features
 
 - User authentication: Sign up and log in securely.
@@ -11,7 +17,7 @@ CyberTwitter is a small Twitter clone web application built with Ruby, Sinatra, 
 
 ## Deployment
 
-The CyberTwitter application is deployed and can be accessed at [https://chitter-yuhm.onrender.com](https://chitter-yuhm.onrender.com) on Render.
+The CyberTwitter application is deployed and can be accessed at [https://cybertwitter.onrender.com](https://cybertwitter.onrender.com) on Render.
 
 ## Local Development
 
