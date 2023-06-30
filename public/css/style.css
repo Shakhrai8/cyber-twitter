@@ -94,3 +94,13 @@ main {
 .signup-form input[type="submit"]:hover {
   background-color: #0e5d80;
 }
+
+.peep-link {
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.3s ease;
+}
+
+.peep-link:hover .peep {
+  background-color: #444; /* Choose a different color for hover */
+}

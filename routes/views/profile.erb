@@ -24,14 +24,16 @@
           <h4>My Peeps:</h4>
 
           <% @peeps.each do |peep| %>
-            <div class="peep">
-              <div class="peep-content">
-                <p><%= peep.content %></p>
+            <a href="/feed#peep-<%= peep.id %>" class="peep-link">
+              <div class="peep">
+                <div class="peep-content">
+                  <p><%= peep.content %></p>
+                </div>
+                <div class="peep-meta">
+                  <p>Posted by you</p>
+                </div>
               </div>
-              <div class="peep-meta">
-                <p>Posted by: <%= peep.user_id %></p>
-              </div>
-            </div>
+            </a>
           <% end %>
         </div>
       </main>

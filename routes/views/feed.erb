@@ -62,7 +62,7 @@
       <% end %>
 
       <% @peeps.each do |peep| %>
-        <div class="peep">
+        <div class="peep" id="peep-<%= peep.id %>">
           <div class="author-info">
             <h3><span class="user-info" data-user-id="<%= peep.user_id %>"><%= @user_repo.find(peep.user_id).name %></span></h3>
             <p>@<%= @user_repo.find(peep.user_id).username %></p>
