@@ -71,6 +71,12 @@ class Feed < Sinatra::Base
 
       PeepRepository.create(content, user_id)
 
+      tags = params[:tags].split(',')
+      tags.each do |tag|
+        TagRepository.create(tag)
+        PeepTagRepository.create(PeepRepository.all.last.id, TagRepository.all.last.id)
+      end
+
       redirect '/feed'
     else
       redirect '/login'
@@ -92,4 +98,9 @@ class Feed < Sinatra::Base
   def current_user
     UserRepository.find(session[:user_id])
   end
+
+  # def user_tags(string)
+  #   tags = string.scan(/@\w+/) 
+  #   usernames = tags.map{ |tag| tag[1..] } 
+  # end
 end
