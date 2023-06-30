@@ -97,12 +97,13 @@ h1 {
   text-decoration: none;
 }
 
-/* .peep {
-  background-color: #333;
+.peep {
+  background: rgba(68, 66, 66, 0.5);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   padding: 20px;
   margin-bottom: 20px;
-} */
+}
 
 .peep-content {
   background-color: #444;
@@ -178,7 +179,7 @@ h1 {
 }
 
 .reply-form textarea {
-  width: 100%;
+  width: 95%;
   height: 60px;
   padding: 10px;
   border: 1px solid #888;
