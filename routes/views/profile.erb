@@ -36,6 +36,15 @@
             </a>
           <% end %>
         </div>
+
+        <div class="notifications">
+          <% @notifications.each do |notification| %>
+            <div class="notification">
+              <p><%= notification.content %></p>
+              <p>Peep: <a href="/feed#peep-<%= notification.peep_id %>">View Peep</a></p>
+            </div>
+          <% end %>
+        </div>
       </main>
 
       <footer>

@@ -1,5 +1,5 @@
 -- Reset identity for all tables
-TRUNCATE TABLE users, peeps, replies, tags, peep_tags RESTART IDENTITY;
+TRUNCATE TABLE users, peeps, replies, tags, peep_tags, notifications RESTART IDENTITY;
 
 -- Insert test data into the users table
 INSERT INTO users (email, password, name, username)
@@ -36,3 +36,8 @@ VALUES
   (2, 3),
   (3, 2),
   (3, 3);
+
+INSERT INTO notifications (event_type, peep_id, user_id)
+VALUES
+  ('tag', 1, 2),
+  ('tag', 3, 1);

@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require_relative '../lib/repositories/user_repository'
 require_relative '../lib/repositories/peep_repository'
+require_relative '../lib/repositories/notification_repository'
 
 class Users < Sinatra::Base
   enable :sessions
@@ -43,11 +44,13 @@ class Users < Sinatra::Base
     if logged_in?
       @user = current_user
       @peeps = PeepRepository.find_by_user(@user.id)
+      @notifications = NotificationRepository.find_by_user(@user.id) 
       erb :profile
     else
       redirect '/login'
     end
   end
+  
 
   get '/logout' do
     session.clear

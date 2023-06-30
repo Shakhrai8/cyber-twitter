@@ -4,6 +4,7 @@ require_relative '../lib/repositories/peep_repository'
 require_relative '../lib/repositories/tag_repository'
 require_relative '../lib/repositories/reply_repository'
 require_relative '../lib/repositories/peep_tag_repository'
+require_relative '../lib/repositories/notification_repository'
 
 class Feed < Sinatra::Base
   enable :sessions
@@ -77,6 +78,15 @@ class Feed < Sinatra::Base
         PeepTagRepository.create(PeepRepository.all.last.id, TagRepository.all.last.id)
       end
 
+      mentioned_usernames = user_tags(content)
+
+      mentioned_usernames.each do |mentioned_username|
+        mentioned_user = UserRepository.find_by_username(mentioned_username)
+        if mentioned_user
+          NotificationRepository.create("mention", PeepRepository.all.last.id, mentioned_user.id, "You have been mentioned in a peep.")
+        end
+      end      
+
       redirect '/feed'
     else
       redirect '/login'
@@ -99,8 +109,8 @@ class Feed < Sinatra::Base
     UserRepository.find(session[:user_id])
   end
 
-  # def user_tags(string)
-  #   tags = string.scan(/@\w+/) 
-  #   usernames = tags.map{ |tag| tag[1..] } 
-  # end
+  def user_tags(content)
+    tags = content.scan(/@\w+/) 
+    usernames = tags.map{ |tag| tag[1..] } 
+  end
 end

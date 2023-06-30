@@ -22,6 +22,13 @@ class UserRepository
     return find_helper(result)
   end
 
+  def self.find_by_username(username)
+    query = "SELECT id, name, username, email, password FROM users WHERE username = $1;"
+    result = DatabaseConnection.exec_params(query, [username])
+    
+    return find_helper(result)
+  end
+
   def self.authenticate(email, password)
     query = "SELECT id, name, username, email, password FROM users WHERE email = $1 AND password = $2;"
     result = DatabaseConnection.exec_params(query, [email, password])
