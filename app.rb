@@ -5,6 +5,7 @@ require_relative 'lib/database_connection'
 require_relative 'routes/users'
 require_relative 'routes/feed'
 require 'securerandom'
+require 'rack/protection'
 
 DatabaseConnection.connect
 
@@ -22,6 +23,8 @@ class Application < Sinatra::Base
     enable :sessions
     set :session_secret, SecureRandom.hex(64)
     set :session_options, secure: true
+
+    use Rack::Protection, except: [:session_hijacking]
   end
 
   use Users
