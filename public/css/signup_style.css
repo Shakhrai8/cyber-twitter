@@ -84,3 +84,8 @@ canvas {
   left: 0;
   pointer-events: none;
 }
+
+.error {
+  color: red;
+  font-weight: bold;
+}

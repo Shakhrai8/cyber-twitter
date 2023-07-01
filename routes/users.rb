@@ -12,15 +12,38 @@ class Users < Sinatra::Base
   end
 
   post '/signup' do
-    name = params[:name]
-    username = params[:username]
-    email = params[:email]
+    name = params[:name].strip
+    username = params[:username].strip
+    email = params[:email].strip
     password = params[:password]
-
+  
+    # Check if name is empty
+    if name.empty?
+      session[:error] = "Name cannot be empty."
+      redirect '/signup'
+    end
+  
+    # Check if username is empty
+    if username.empty?
+      session[:error] = "Username cannot be empty."
+      redirect '/signup'
+    end
+  
+    # Check if email is valid
+    if !(email =~ /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i)
+      session[:error] = "Please enter a valid email."
+      redirect '/signup'
+    end
+  
+    # Check if password is valid (minimum 8 characters)
+    if password.length < 8
+      session[:error] = "Password must be at least 8 characters long."
+      redirect '/signup'
+    end
+  
     UserRepository.create(name, username, email, password)
-
     redirect '/login'
-  end
+  end  
 
   get '/login' do
     erb :login
