@@ -21,6 +21,7 @@ class Application < Sinatra::Base
   configure do
     enable :sessions
     set :session_secret, SecureRandom.hex(64)
+    set :session_options, secure: true
   end
 
   use Users
