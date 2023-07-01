@@ -55,6 +55,10 @@
           <div class="notification">
             <p><%= notification.content %></p>
             <p>Peep: <a href="/feed#peep-<%= notification.peep_id %>">View Peep</a></p>
+            <form action="/profile/dismiss" method="POST">
+              <input type="hidden" name="notification_id" value="<%= notification.id %>">
+              <button type="submit" class="dismiss-button">Dismiss</button>
+            </form>
           </div>
         <% end %>
       </div>

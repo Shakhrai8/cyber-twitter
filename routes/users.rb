@@ -72,7 +72,12 @@ class Users < Sinatra::Base
     end
   end
   
-
+  post '/profile/dismiss' do
+    notification_id = params[:notification_id].to_i
+    NotificationRepository.delete(notification_id) 
+    redirect '/profile#notification-popup'
+  end
+  
   get '/logout' do
     session.clear
     redirect '/'
