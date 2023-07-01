@@ -9,12 +9,16 @@
 <body>
 <canvas id="Matrix"></canvas>
   <div class="overlay">
-  <% if @user %>
+    <% if @user %>
     <div class="profile-container">
       <header>
         <h1>Your Profile</h1>
         <a href="/feed" class="button">Go to Feed</a>
-        <a href="/logout" class="button">Logout</a>  
+        <a href="/logout" class="button">Logout</a>
+        <button id="notification-bell" class="button">
+          <span class="bell-icon"></span>
+          <span id="notification-indicator" class="indicator"></span>
+        </button>
       </header>
 
       <main>
@@ -37,19 +41,23 @@
           <% end %>
         </div>
 
-        <div class="notifications">
-          <% @notifications.each do |notification| %>
-            <div class="notification">
-              <p><%= notification.content %></p>
-              <p>Peep: <a href="/feed#peep-<%= notification.peep_id %>">View Peep</a></p>
-            </div>
-          <% end %>
-        </div>
       </main>
 
       <footer>
         <a href="/logout">Logout</a>
       </footer>
+    </div>
+    <div id="notification-popup" class="notification-popup">
+    <button id="close-notification" class="close-button">×</button>
+      <h4>Notifications</h4>
+      <div id="notification-list" class="notifications">
+        <% @notifications.each do |notification| %>
+          <div class="notification">
+            <p><%= notification.content %></p>
+            <p>Peep: <a href="/feed#peep-<%= notification.peep_id %>">View Peep</a></p>
+          </div>
+        <% end %>
+      </div>
     </div>
   <% else %>
     <div class="login-container">
@@ -103,6 +111,43 @@
     };
 
     setInterval(draw, 75);
+
+    const notificationBell = document.getElementById('notification-bell');
+    const notificationPopup = document.getElementById('notification-popup');
+    const notificationIndicator = document.getElementById('notification-indicator');
+    const closeNotificationButton = document.getElementById('close-notification');
+    closeNotificationButton.addEventListener('click', closeNotificationPopup);
+
+    let isNotificationOpen = false; // Track the state of the notification popup
+
+    notificationBell.addEventListener('click', () => {
+      if (isNotificationOpen) {
+        closeNotificationPopup();
+      } else {
+        openNotificationPopup();
+      }
+    });
+
+    function openNotificationPopup() {
+      notificationPopup.style.display = 'block';
+      isNotificationOpen = true;
+
+      // Hide the notification indicator when the popup is opened
+      notificationIndicator.style.display = 'none';
+    }
+
+    function closeNotificationPopup() {
+      notificationPopup.style.display = 'none';
+      isNotificationOpen = false;
+    }
+
+    // Check and display the indicator if there are new notifications
+    const hasNewNotifications = <%= @notifications.any? %>; // Replace with the appropriate condition to check if there are new notifications
+    if (hasNewNotifications) {
+      notificationIndicator.style.display = 'block';
+    } else {
+      notificationIndicator.style.display = 'none';
+    }
   </script>
 </body>
 </html>

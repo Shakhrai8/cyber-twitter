@@ -49,7 +49,7 @@ RSpec.describe 'Feed' do
         expect(last_response.body).to include('<div class="create-peep">')
         expect(last_response.body).to include('<h2>Create a Peep</h2>')
         expect(last_response.body).to include('<form action="/create_peep" method="post">')
-        expect(last_response.body).to include('<textarea name="content" placeholder="Write your peep here"></textarea>')
+        expect(last_response.body).to include('<textarea name="content" placeholder="Write your peep here" required></textarea>')
         expect(last_response.body).to include('<button type="submit">Peep</button>')
       end
     end
