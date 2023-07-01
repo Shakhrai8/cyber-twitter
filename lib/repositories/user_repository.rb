@@ -1,12 +1,14 @@
 require_relative '../models/user'
+require 'bcrypt'
+
 
 class UserRepository
   def self.create(name, username, email, password)
+    hashed_password = BCrypt::Password.create(password)
     query = "INSERT INTO users (name, username, email, password) VALUES ($1, $2, $3, $4);"
-    DatabaseConnection.exec_params(query, [name, username, email, password])
-
+    DatabaseConnection.exec_params(query, [name, username, email, hashed_password])
     return nil
-  end
+  end  
 
   def self.find(id)
     query = "SELECT id, name, username, email, password FROM users WHERE id = $1;"
@@ -30,12 +32,13 @@ class UserRepository
   end
 
   def self.authenticate(email, password)
-    query = "SELECT id, name, username, email, password FROM users WHERE email = $1 AND password = $2;"
-    result = DatabaseConnection.exec_params(query, [email, password])
-    return nil if result.ntuples.zero?
-
-    return find_helper(result)
-  end
+    user = find_by_email(email)
+    if user && BCrypt::Password.new(user.password) == password
+      return user
+    else
+      return nil
+    end
+  end  
 
   def self.all
     users = []
