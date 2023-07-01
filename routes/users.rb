@@ -4,8 +4,6 @@ require_relative '../lib/repositories/peep_repository'
 require_relative '../lib/repositories/notification_repository'
 
 class Users < Sinatra::Base
-  enable :sessions
-  set :session_secret, "5cdde102f6f68294e1cff23f341aaaaf2d2725453eaccc8ebc239629e724fc53"
 
   get '/signup' do
     erb :signup

@@ -7,8 +7,6 @@ require_relative '../lib/repositories/peep_tag_repository'
 require_relative '../lib/repositories/notification_repository'
 
 class Feed < Sinatra::Base
-  enable :sessions
-  set :session_secret, "5cdde102f6f68294e1cff23f341aaaaf2d2725453eaccc8ebc239629e724fc53"
   # future sort function
   # get '/sort_peeps' do
   #   if logged_in?

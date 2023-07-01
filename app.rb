@@ -1,11 +1,10 @@
 require 'sinatra'
-require 'base64'
 require 'sinatra/base'
 require 'sinatra/reloader'
-require 'securerandom'
 require_relative 'lib/database_connection'
 require_relative 'routes/users'
 require_relative 'routes/feed'
+require 'securerandom'
 
 DatabaseConnection.connect
 
@@ -21,7 +20,7 @@ class Application < Sinatra::Base
 
   configure do
     enable :sessions
-    set :session_secret, "5cdde102f6f68294e1cff23f341aaaaf2d2725453eaccc8ebc239629e724fc53"
+    set :session_secret, SecureRandom.hex(64)
   end
 
   use Users
@@ -30,5 +29,4 @@ class Application < Sinatra::Base
   get '/' do
     erb :index
   end
-
 end
