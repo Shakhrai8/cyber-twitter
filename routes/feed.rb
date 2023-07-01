@@ -52,39 +52,39 @@ class Feed < Sinatra::Base
 
   post '/reply' do
     if logged_in?
-      content = params[:content]
+      content = sanitize_input(params[:content])
       user_id = session[:user_id]
-      peep_id = params[:peep_id].to_i
-
+      peep_id = sanitize_input(params[:peep_id]).to_i
+  
       ReplyRepository.create(content, user_id, peep_id)
       redirect '/feed'
     else
       redirect '/login'
     end
   end
-
+  
   post '/create_peep' do
     if logged_in?
-      content = params[:content]
+      content = sanitize_input(params[:content])
       user_id = session[:user_id]
-
+  
       PeepRepository.create(content, user_id)
-
-      tags = params[:tags].split(',')
+  
+      tags = sanitize_input(params[:tags]).split(',')
       tags.each do |tag|
         TagRepository.create(tag)
         PeepTagRepository.create(PeepRepository.all.last.id, TagRepository.all.last.id)
       end
-
+  
       mentioned_usernames = user_tags(content)
-
+  
       mentioned_usernames.each do |mentioned_username|
         mentioned_user = UserRepository.find_by_username(mentioned_username)
         if mentioned_user
           NotificationRepository.create("mention", PeepRepository.all.last.id, mentioned_user.id, "You have been mentioned in a peep.")
         end
-      end      
-
+      end
+  
       redirect '/feed'
     else
       redirect '/login'
@@ -110,5 +110,9 @@ class Feed < Sinatra::Base
   def user_tags(content)
     tags = content.scan(/@\w+/) 
     usernames = tags.map{ |tag| tag[1..] } 
+  end
+
+  def sanitize_input(input)
+    Rack::Utils.escape_html(input)
   end
 end

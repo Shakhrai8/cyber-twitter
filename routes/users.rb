@@ -10,9 +10,9 @@ class Users < Sinatra::Base
   end
 
   post '/signup' do
-    name = params[:name].strip
-    username = params[:username].strip
-    email = params[:email].strip
+    name = sanitize_input(params[:name])
+    username = sanitize_input(params[:username])
+    email = sanitize_input(params[:email])
     password = params[:password]
   
     # Check if name is empty
@@ -48,11 +48,11 @@ class Users < Sinatra::Base
   end
 
   post '/login' do
-    email = params[:email]
-    password = params[:password]
-
+    email = sanitize_input(params[:email])
+    password = sanitize_input(params[:password])
+  
     user = UserRepository.authenticate(email, password)
-
+  
     if user
       session[:user_id] = user.id
       redirect '/profile'
@@ -86,5 +86,9 @@ class Users < Sinatra::Base
 
   def current_user
     UserRepository.find(session[:user_id])
+  end
+
+  def sanitize_input(input)
+    Rack::Utils.escape_html(input.strip)
   end
 end
