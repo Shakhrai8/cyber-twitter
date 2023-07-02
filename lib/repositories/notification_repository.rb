@@ -19,6 +19,12 @@ class NotificationRepository
     nil
   end
 
+  def self.all
+    query = "SELECT id, event_type, peep_id, user_id, content, timestamp::timestamp(0) AS timestamp FROM notifications;"
+    result = DatabaseConnection.exec_params(query, [])
+    build_notifications(result)
+  end
+
   private
 
   def self.build_notification(inst)
