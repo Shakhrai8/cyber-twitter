@@ -217,6 +217,30 @@ h1 {
   z-index: 999;
 }
 
+.user-info-popup .user-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  float: left; /* Add this line to float the photo to the left */
+}
+
+.user-info-popup .user-details {
+  overflow: hidden; /* Add this line to clear the float and contain the details */
+}
+
+.user-info-popup .user-details h3,
+.user-info-popup .user-details p {
+  margin: 0;
+  color: #fff;
+}
+
+.user-info-popup .user-bio {
+  margin-top: 5px; /* Add margin-top to create space between name and bio */
+  color: #ccc;
+}
+
 canvas {
   position: fixed; /* Change this to fixed so that it stays in place */
   top: 0;

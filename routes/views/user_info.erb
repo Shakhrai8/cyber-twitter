@@ -1,11 +1,14 @@
 <div class="user-info-popup">
-  <% if user && user.name && user.username && user.email %>
+  <% if user && user.name && user.username %>
     <h3><%= user.name %></h3>
-    <p>Username: <%= user.username %></p>
-    <p>Email: <%= user.email %></p>
-    <!-- Add any other user information you want to display -->
+    <img src="<%= user.profile_photo_url %>" alt="Profile Photo" class="user-photo">
+    <div class="user-details">  
+      <p>@<%= user.username %></p>
+      <% if user.bio %>
+        <p>Bio: <%= user.bio %></p>
+      <% end %>
+    </div>
   <% else %>
     <p>No user information available</p>
   <% end %>
 </div>
-
