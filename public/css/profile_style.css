@@ -26,8 +26,15 @@ h1 {
   letter-spacing: 2px;
 }
 
+.button-container {
+  display: flex;
+  gap: 20px;
+}
+
 .button {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px 20px;
   background-color: #333;
   color: #fff;
@@ -211,12 +218,9 @@ canvas {
 }
 
 .bell-icon {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  background-image: url("https://www.freeiconspng.com/thumbs/bell-icons/bell-icon-16.png");
-  background-repeat: no-repeat;
-  background-position: center;
+  /* Adjust these values as needed for the icon */
+  font-size: 16px; /* Adjust size with font-size instead of width and height */
+  margin-right: 5px; /* To provide spacing between the icon and the text */
 }
 
 .indicator {

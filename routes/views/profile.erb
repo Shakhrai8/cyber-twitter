@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="/css/style.css">
   <link rel="stylesheet" type="text/css" href="/css/profile_style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 </head>
 <body>
 <canvas id="Matrix"></canvas>
@@ -13,12 +14,14 @@
     <div class="profile-container">
       <header>
         <h1>Your Profile</h1>
-        <a href="/feed" class="button">Go to Feed</a>
-        <a href="/logout" class="button">Logout</a>
-        <button id="notification-bell" class="button">
-          <span class="bell-icon"></span>
-          <span id="notification-indicator" class="indicator"></span>
-        </button>
+        <div class="button-container">
+          <a href="/feed" class="button">Go to Feed</a>
+          <button id="notification-bell" class="button">
+            <i class="fas fa-bell"></i>
+            <span id="notification-indicator" class="indicator"></span>
+          </button>
+          <a href="/logout" class="button">Logout</a>
+        </div>
       </header>
 
       <main>
