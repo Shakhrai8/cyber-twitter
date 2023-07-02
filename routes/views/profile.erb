@@ -9,41 +9,63 @@
 </head>
 <body>
 <canvas id="Matrix"></canvas>
-  <div class="overlay">
-    <% if @user %>
-    <div class="profile-container">
-      <header>
-        <h1>Your Profile</h1>
-        <div class="button-container">
-          <a href="/feed" class="button">Go to Feed</a>
-          <button id="notification-bell" class="button">
-            <i class="fas fa-bell"></i>
-          </button>
-          <a href="/logout" class="button">Logout</a>
-        </div>
-      </header>
+<div class="overlay">
+  <% if @user %>
+  <div class="profile-container">
+    <header>
+      <h1>Your Profile</h1>
+      <div class="button-container">
+        <a href="/feed" class="button">Go to Feed</a>
+        <button id="notification-bell" class="button">
+          <i class="fas fa-bell"></i>
+        </button>
+        <a href="/logout" class="button">Logout</a>
+      </div>
+    </header>
 
-      <main>
-        <div class="feed-container">
-          <h3>Welcome, <%= @user.username %>!</h3>
-
-          <h4>My Peeps:</h4>
-
-          <% @peeps.each do |peep| %>
-            <a href="/feed#peep-<%= peep.id %>" class="peep-link">
-              <div class="peep">
-                <div class="peep-content">
-                  <p><%= peep.content %></p>
-                </div>
-                <div class="peep-meta">
-                  <p><%= peep.timestamp %></p>
-                </div>
+    <main>
+      <div class="feed-container">
+        <div class="profile-info">
+          <div class="profile-photo"> 
+            <img src="<%= @user.profile_photo_url %>" alt="Profile Photo" id="profile-photo" class="profile-picture">
+            <button id="change-photo-btn" class="button">Change Photo</button>
+          </div>
+          
+          <div class="profile-details">
+            <h3>@<%= @user.username %></h3>
+            <p><%= @user.name %></p>
+            <div class="bio-section">
+              <% if @user.bio %>
+                <p id="user-bio"><%= @user.bio %></p>
+              <% else %>
+                <p id="user-bio" class="empty-bio">No bio available</p>
+              <% end %>
+              <button class="button" id="edit-bio-btn">Edit Bio</button>
+              <div id="bio-editor">
+                <textarea id="new-bio"><%= @user.bio %></textarea>
+                <button class="button" id="save-bio-btn">Save Changes</button>
+                <button class="button" id="cancel-bio-btn">Cancel Changes</button>
               </div>
-            </a>
-          <% end %>
+            </div>
+          </div>
         </div>
 
-      </main>
+        <h4>My Peeps:</h4>
+
+        <% @peeps.each do |peep| %>
+          <a href="/feed#peep-<%= peep.id %>" class="peep-link">
+            <div class="peep">
+              <div class="peep-content">
+                <p><%= peep.content %></p>
+              </div>
+              <div class="peep-meta">
+                <p><%= peep.timestamp %></p>
+              </div>
+            </div>
+          </a>
+        <% end %>
+      </div>
+    </main>
 
       <footer>
         <a href="/logout">Logout</a>
@@ -155,6 +177,48 @@
     // } else {
     //   notificationIndicator.style.display = 'none';
     // }
+
+    document.getElementById('change-photo-btn').addEventListener('click', function() {
+    const newPhotoURL = prompt('Enter the new photo URL:');
+      if (newPhotoURL) {
+        fetch('/update_photo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ photo_url: newPhotoURL }),
+        })
+        .then(() => {
+          document.getElementById('profile-photo').src = newPhotoURL;
+        });
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('edit-bio-btn').addEventListener('click', function() {
+        document.querySelector('.bio-section').classList.add('edit-mode');
+      });
+
+      document.getElementById('cancel-bio-btn').addEventListener('click', function() {
+        document.querySelector('.bio-section').classList.remove('edit-mode');
+      });
+
+      document.getElementById('save-bio-btn').addEventListener('click', function() {
+        const newBio = document.getElementById('new-bio').value;
+        fetch('/update_bio', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ bio: newBio }),
+        })
+        .then(() => {
+          document.getElementById('user-bio').innerText = newBio;
+          document.querySelector('.bio-section').classList.remove('edit-mode');
+        });
+      });
+    });
+
   </script>
 </body>
 </html>

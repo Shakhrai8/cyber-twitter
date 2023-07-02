@@ -71,6 +71,20 @@ class Users < Sinatra::Base
       redirect '/login'
     end
   end
+
+  post '/update_photo' do
+    content_type :json
+    data = JSON.parse(request.body.read)
+    UserRepository.update_photo(session[:user_id], data['photo_url'])
+    {}.to_json
+  end
+  
+  post '/update_bio' do
+    content_type :json
+    data = JSON.parse(request.body.read)
+    UserRepository.update_bio(session[:user_id], data['bio'])
+    {}.to_json
+  end  
   
   post '/profile/dismiss' do
     notification_id = params[:notification_id].to_i

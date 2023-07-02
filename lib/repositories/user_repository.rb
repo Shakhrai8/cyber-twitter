@@ -11,21 +11,21 @@ class UserRepository
   end  
 
   def self.find(id)
-    query = "SELECT id, name, username, email, password FROM users WHERE id = $1;"
+    query = "SELECT * FROM users WHERE id = $1;"
     result = DatabaseConnection.exec_params(query, [id])
 
     return find_helper(result)
   end
 
   def self.find_by_email(email)
-    query = "SELECT id, name, username, email, password FROM users WHERE email = $1;"
+    query = "SELECT * FROM users WHERE email = $1;"
     result = DatabaseConnection.exec_params(query, [email])
     
     return find_helper(result)
   end
 
   def self.find_by_username(username)
-    query = "SELECT id, name, username, email, password FROM users WHERE username = $1;"
+    query = "SELECT * FROM users WHERE username = $1;"
     result = DatabaseConnection.exec_params(query, [username])
     
     return find_helper(result)
@@ -42,12 +42,22 @@ class UserRepository
 
   def self.all
     users = []
-    query = "SELECT id, name, username, email, password FROM users;"
+    query = "SELECT * FROM users;"
     result = DatabaseConnection.exec_params(query, [])
     result.each do |inst|
       users << all_helper(inst)
     end
     return users
+  end
+
+  def self.update_photo(id, photo_url)
+    query = "UPDATE users SET profile_photo_url = $1 WHERE id = $2;"
+    DatabaseConnection.exec_params(query, [photo_url, id])
+  end
+
+  def self.update_bio(id, bio)
+    query = "UPDATE users SET bio = $1 WHERE id = $2;"
+    DatabaseConnection.exec_params(query, [bio, id])
   end
 
   private
@@ -59,18 +69,24 @@ class UserRepository
     user.username = inst['username']
     user.email = inst['email']
     user.password = inst['password']
+    user.profile_photo_url = inst['profile_photo_url']
+    user.bio = inst['bio']
 
     return user
   end
 
   def self.find_helper(result)
     return nil if result.ntuples.zero?
+
+    inst = result[0]
     user = User.new
-    user.id = result[0]['id'].to_i
-    user.name = result[0]['name']
-    user.username = result[0]['username']
-    user.email = result[0]['email']
-    user.password = result[0]['password']
+    user.id = inst['id'].to_i
+    user.name = inst['name']
+    user.username = inst['username']
+    user.email = inst['email']
+    user.password = inst['password']
+    user.profile_photo_url = inst['profile_photo_url']
+    user.bio = inst['bio']
 
     return user
   end
