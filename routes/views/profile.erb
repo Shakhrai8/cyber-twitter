@@ -34,7 +34,7 @@
                   <p><%= peep.content %></p>
                 </div>
                 <div class="peep-meta">
-                  <p>Posted by you</p>
+                  <p><%= peep.timestamp %></p>
                 </div>
               </div>
             </a>
@@ -55,6 +55,7 @@
           <div class="notification">
             <p><%= notification.content %></p>
             <p>Peep: <a href="/feed#peep-<%= notification.peep_id %>">View Peep</a></p>
+            <p><%= notification.timestamp %></p>
             <form action="/profile/dismiss" method="POST">
               <input type="hidden" name="notification_id" value="<%= notification.id %>">
               <button type="submit" class="dismiss-button">Dismiss</button>

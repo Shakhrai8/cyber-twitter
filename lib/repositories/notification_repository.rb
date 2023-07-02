@@ -8,7 +8,7 @@ class NotificationRepository
   end
 
   def self.find_by_user(user_id)
-    query = "SELECT * FROM notifications WHERE user_id = $1;"
+    query = "SELECT id, event_type, peep_id, user_id, content, timestamp::timestamp(0) AS timestamp FROM notifications WHERE user_id = $1;"
     result = DatabaseConnection.exec_params(query, [user_id])
     build_notifications(result)
   end
@@ -29,7 +29,8 @@ class NotificationRepository
       event_type: inst['event_type'],
       peep_id: inst['peep_id'].to_i,
       user_id: inst['user_id'].to_i,
-      content: inst['content']
+      content: inst['content'],
+      timestamp: inst['timestamp']
     )
   end
 

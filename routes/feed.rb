@@ -57,6 +57,16 @@ class Feed < Sinatra::Base
       peep_id = sanitize_input(params[:peep_id]).to_i
   
       ReplyRepository.create(content, user_id, peep_id)
+      by_this_user = UserRepository.find(user_id.to_i)
+      mentioned_usernames = user_tags(content)
+  
+      mentioned_usernames.each do |mentioned_username|
+        mentioned_user = UserRepository.find_by_username(mentioned_username)
+        if mentioned_user
+          NotificationRepository.create("mention", PeepRepository.all.last.id, mentioned_user.id, "You have been mentioned in a peep by the user @#{by_this_user.username}.")
+        end
+      end
+
       redirect '/feed'
     else
       redirect '/login'
@@ -69,7 +79,8 @@ class Feed < Sinatra::Base
       user_id = session[:user_id]
   
       PeepRepository.create(content, user_id)
-  
+      by_this_user = UserRepository.find(user_id.to_i)
+
       tags = sanitize_input(params[:tags]).split(',')
       tags.each do |tag|
         TagRepository.create(tag)
@@ -81,7 +92,7 @@ class Feed < Sinatra::Base
       mentioned_usernames.each do |mentioned_username|
         mentioned_user = UserRepository.find_by_username(mentioned_username)
         if mentioned_user
-          NotificationRepository.create("mention", PeepRepository.all.last.id, mentioned_user.id, "You have been mentioned in a peep.")
+          NotificationRepository.create("mention", PeepRepository.all.last.id, mentioned_user.id, "You have been mentioned in a peep by the user @#{by_this_user.username}.")
         end
       end
   
