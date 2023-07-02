@@ -63,6 +63,9 @@
 
       <% @peeps.each do |peep| %>
         <div class="peep" id="peep-<%= peep.id %>">
+          <div class="author-photo-container">
+            <img src="<%= @user_repo.find(peep.user_id).profile_photo_url %>" alt="Profile Photo" class="author-photo">
+          </div>
           <div class="author-info">
             <h3><span class="user-info" data-user-id="<%= peep.user_id %>"><%= @user_repo.find(peep.user_id).name %></span></h3>
             <p>@<%= @user_repo.find(peep.user_id).username %></p>
