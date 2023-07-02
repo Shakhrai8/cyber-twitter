@@ -113,8 +113,7 @@ RSpec.describe 'Feed' do
 
         expect(last_response).to be_ok
         expect(last_response.body).to include('<h3>Test User 1</h3>')
-        expect(last_response.body).to include('<p>Username: testuser1</p>')
-        expect(last_response.body).to include('<p>Email: testuser1@example.com</p>')
+        expect(last_response.body).to include('<p>@testuser1</p>')
       end
     end
   end
