@@ -68,21 +68,36 @@ h4 {
   margin-bottom: 10px;
 }
 
-.peep {
+.peep,
+.reply {
   background-color: #333;
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
 }
 
-.peep-content p {
+.peep-content p,
+.reply-content p {
   margin: 0;
 }
 
-.peep-meta p {
+.peep-meta p,
+.reply-meta p {
   color: #888;
   font-size: 14px;
   margin: 0;
+}
+
+.peep-link,
+.reply-link {
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.3s ease;
+}
+
+.peep-link:hover .peep,
+.reply-link:hover .reply {
+  background-color: #444; /* Choose a different color for hover */
 }
 
 footer {
@@ -301,4 +316,32 @@ canvas {
   border: 1px solid #555;
   color: #fff;
   resize: none;
+}
+
+.tabs {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.tab {
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #eee;
+  color: #333;
+}
+
+.tab.active {
+  background-color: #333;
+  color: #fff;
+}
+
+.tab-content {
+  display: none;
+  margin-top: 20px;
+}
+
+.tab-content.active {
+  display: block;
 }

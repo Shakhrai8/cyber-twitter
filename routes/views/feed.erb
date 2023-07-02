@@ -78,7 +78,7 @@
           </div>
           <div class="replies">
             <% @reply_repo.find_by_peep(peep.id).each do |reply| %>
-              <div class="reply">
+              <div class="reply" id="reply-<%= reply.id %>">
                 <div class="author-info">
                   <h4><span class="user-info" data-user-id="<%= reply.user_id %>"><%= @user_repo.find(reply.user_id).name %></span></h4>
                   <p>@<%= @user_repo.find(reply.user_id).username %></p>

@@ -32,6 +32,12 @@ class ReplyRepository
     build_replies(result)
   end
 
+  def self.find_by_user(user_id)
+    query = "SELECT * FROM replies WHERE user_id = $1;"
+    result = DatabaseConnection.exec_params(query, [user_id])
+    build_replies(result)
+  end
+
   private
 
   def self.build_reply(result)

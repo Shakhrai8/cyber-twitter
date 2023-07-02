@@ -65,6 +65,7 @@ class Users < Sinatra::Base
     if logged_in?
       @user = current_user
       @peeps = PeepRepository.find_by_user(@user.id)
+      @replies = ReplyRepository.find_by_user(@user.id)
       @notifications = NotificationRepository.find_by_user(@user.id) 
       erb :profile
     else

@@ -50,20 +50,45 @@
           </div>
         </div>
 
-        <h4>My Peeps:</h4>
+        <div class="tabs">
+          <div id="my-peeps-tab" class="tab active">My Peeps</div>
+          <div id="my-replies-tab" class="tab">My Replies</div>
+        </div>
 
-        <% @peeps.each do |peep| %>
-          <a href="/feed#peep-<%= peep.id %>" class="peep-link">
-            <div class="peep">
-              <div class="peep-content">
-                <p><%= peep.content %></p>
+        <div id="my-peeps-content" class="tab-content active">
+          <h4>My Peeps:</h4>
+
+          <% @peeps.each do |peep| %>
+            <a href="/feed#peep-<%= peep.id %>" class="peep-link">
+              <div class="peep">
+                <div class="peep-content">
+                  <p><%= peep.content %></p>
+                </div>
+                <div class="peep-meta">
+                  <p><%= peep.timestamp %></p>
+                </div>
               </div>
-              <div class="peep-meta">
-                <p><%= peep.timestamp %></p>
+            </a>
+          <% end %>
+        </div>
+
+        <div id="my-replies-content" class="tab-content">
+          <h4>My Replies:</h4>
+
+          <% @replies.each do |reply| %>
+            <a href="/feed#reply-<%= reply.id %>" class="reply-link">
+              <div class="reply">
+                <div class="reply-content">
+                  <p><%= reply.content %></p>
+                </div>
+                <div class="reply-meta">
+                  <p><%= reply.timestamp %></p>
+                </div>
               </div>
-            </div>
-          </a>
-        <% end %>
+            </a>
+          <% end %>
+        </div>
+
       </div>
     </main>
 
@@ -219,6 +244,38 @@
       });
     });
 
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initially show "My Peeps" content
+      var myPeepsContent = document.getElementById('my-peeps-content');
+      var myRepliesContent = document.getElementById('my-replies-content');
+      
+      myPeepsContent.style.display = 'block';
+      
+      // Handle click event for "My Peeps" tab
+      var myPeepsTab = document.getElementById('my-peeps-tab');
+      myPeepsTab.addEventListener('click', function() {
+        // Show "My Peeps" content and hide "My Replies" content
+        myPeepsContent.style.display = 'block';
+        myRepliesContent.style.display = 'none';
+        
+        // Update tab active state
+        myPeepsTab.classList.add('active');
+        myRepliesTab.classList.remove('active');
+      });
+      
+      // Handle click event for "My Replies" tab
+      var myRepliesTab = document.getElementById('my-replies-tab');
+      myRepliesTab.addEventListener('click', function() {
+        // Show "My Replies" content and hide "My Peeps" content
+        myRepliesContent.style.display = 'block';
+        myPeepsContent.style.display = 'none';
+        
+        // Update tab active state
+        myRepliesTab.classList.add('active');
+        myPeepsTab.classList.remove('active');
+      });
+    });
   </script>
 </body>
 </html>
