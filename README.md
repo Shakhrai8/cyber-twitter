@@ -21,7 +21,7 @@ The JavaScript version focuses on the frontend and utilizes the provided backend
 
 ## Screenshots
 
-![](./public/cyber_screenshots.jpg)
+![](./public/cyber_screenshots.png)
 
 ## Deployment
 
