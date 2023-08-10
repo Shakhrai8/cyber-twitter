@@ -19,6 +19,10 @@ The JavaScript version focuses on the frontend and utilizes the provided backend
 - Feed: View a chronological list of peeps from all users.
 - Profile page: See your own profile with your posted peeps.
 
+## Screenshots
+
+![](./public/cyber_screenshots.png)
+
 ## Deployment
 
 The CyberTwitter application is deployed and can be accessed at [https://cybertwitter.onrender.com](https://cybertwitter.onrender.com) on Render.
