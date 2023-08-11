@@ -3,6 +3,17 @@
 CyberTwitter is a small Twitter clone web application built with Ruby, Sinatra, and JavaScript. It allows users to sign up, log in, post "peeps" (tweets), and view a feed of peeps from other users.
 
 <p align="center">
+ <img src="https://img.shields.io/badge/ruby-%23CC342D.svg?style=for-the-badge&logo=ruby&logoColor=white" alt="Ruby" />
+ <img src="https://img.shields.io/badge/sinatra-%23D00000.svg?style=for-the-badge&logo=sinatra&logoColor=white" alt="Sinatra" />
+ <img src="https://img.shields.io/badge/postgresql-%23336791.svg?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+ <img src="https://img.shields.io/badge/bcrypt-%23172F2E.svg?style=for-the-badge&logo=bcrypt&logoColor=white" alt="BCrypt" />
+ <img src="https://img.shields.io/badge/rspec-%23C21325.svg?style=for-the-badge&logo=rspec&logoColor=white" alt="RSpec" />
+ <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />
+ <img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />
+ <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="JavaScript" />
+</p>
+
+<p align="center">
   <img src="./public/main_page.gif" alt="Main Page GIF">
 </p>
 
