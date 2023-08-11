@@ -39,8 +39,18 @@ class Users < Sinatra::Base
       redirect '/signup'
     end
   
-    UserRepository.create(name, username, email, password)
-    redirect '/login'
+    result = UserRepository.create(name, username, email, password)
+
+    case result
+    when 'duplicate_email'
+      session[:error] = "Email is already taken."
+      redirect '/signup'
+    when 'duplicate_username'
+      session[:error] = "Username is already taken."
+      redirect '/signup'
+    else
+      redirect '/login'
+    end
   end  
 
   get '/login' do

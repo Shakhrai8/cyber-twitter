@@ -5,8 +5,18 @@ require 'bcrypt'
 class UserRepository
   def self.create(name, username, email, password)
     hashed_password = BCrypt::Password.create(password)
-    query = "INSERT INTO users (name, username, email, password) VALUES ($1, $2, $3, $4);"
-    DatabaseConnection.exec_params(query, [name, username, email, hashed_password])
+    query = "INSERT INTO users (name, username, email, password) VALUES ($1, $2, $3, $4) RETURNING id;"
+    result = DatabaseConnection.exec_params(query, [name, username, email, hashed_password])
+  
+
+    result[0]['id'].to_i
+  rescue PG::UniqueViolation => e
+    # Handle unique constraint violations
+    if e.message.include?("email")
+      return 'duplicate_email'
+    elsif e.message.include?("username")
+      return 'duplicate_username'
+    end
     return nil
   end  
 
