@@ -98,5 +98,5 @@ RSpec.describe PeepTagRepository do
 
       PeepTagRepository.delete(peep_id, tag_id)
     end
-  end
+  end 
 end

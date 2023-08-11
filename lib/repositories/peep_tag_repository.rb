@@ -1,6 +1,7 @@
 require_relative '../models/peep_tag'
 require_relative 'tag_repository'
 require_relative 'peep_repository'
+require_relative 'user_repository'
 
 class PeepTagRepository
   def self.create(peep_id, tag_id)
@@ -18,18 +19,6 @@ class PeepTagRepository
   
     result = DatabaseConnection.exec_params(query, [peep_id])
     build_peep_tags(result)
-  end
-
-  def self.find_peeps_with_tags
-    query = <<~SQL
-      SELECT p.id, p.content, p.timestamp, p.user_id, t.name
-      FROM peeps p
-      LEFT JOIN peep_tags pt ON p.id = pt.peep_id
-      LEFT JOIN tags t ON pt.tag_id = t.id;
-    SQL
-
-    result = DatabaseConnection.exec(query)
-    build_peeps_with_tags(result)
   end
 
   def self.find_by_user(user_id)
@@ -77,28 +66,5 @@ class PeepTagRepository
       peep_tags << peep_tag
     end
     peep_tags
-  end
-
-  def self.build_peeps_with_tags(results)
-    peeps = []
-    results.each do |result|
-      peep = Peep.new
-      peep.id = result['id'].to_i
-      peep.content = result['content']
-      peep.timestamp = result['timestamp']
-      peep.user_id = result['user_id'].to_i
-      peep.author = UserRepository.find(peep.user_id)
-      
-      tag_name = result['name']
-      unless tag_name.nil?
-        tag = Tag.new
-        tag.name = tag_name
-        peep.tags << tag
-      end
-      
-      peeps << peep
-    end
-    peeps
-  end
-  
+  end  
 end

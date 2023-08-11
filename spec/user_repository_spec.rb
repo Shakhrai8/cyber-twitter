@@ -76,4 +76,63 @@ RSpec.describe UserRepository do
       expect(BCrypt::Password.new(users[3].password) == 'password456').to be_truthy
     end    
   end
+
+  context '.find' do
+    it 'returns the user by id' do
+      UserRepository.create('Alice', 'alice01', 'alice@example.com', 'passalice')
+      user_by_email = UserRepository.find_by_email('alice@example.com')
+      user_by_id = UserRepository.find(user_by_email.id)
+  
+      expect(user_by_id.name).to eq('Alice')
+      expect(user_by_id.username).to eq('alice01')
+      expect(user_by_id.email).to eq('alice@example.com')
+      expect(BCrypt::Password.new(user_by_id.password) == 'passalice').to be_truthy
+    end
+  
+    it 'returns nil if no user found with the given id' do
+      user = UserRepository.find(9999) # assuming this ID does not exist in the test database
+  
+      expect(user).to be_nil
+    end
+  end
+  
+  context '.find_by_username' do
+    it 'returns the user with the given username' do
+      UserRepository.create('Bob', 'bob01', 'bob@example.com', 'passbob')
+      user = UserRepository.find_by_username('bob01')
+  
+      expect(user.name).to eq('Bob')
+      expect(user.email).to eq('bob@example.com')
+      expect(BCrypt::Password.new(user.password) == 'passbob').to be_truthy
+    end
+  
+    it 'returns nil if no user found with the given username' do
+      user = UserRepository.find_by_username('nonexistent_username')
+  
+      expect(user).to be_nil
+    end
+  end
+  
+  context '.update_photo' do
+    it 'updates the user profile photo URL' do
+      UserRepository.create('Charlie', 'charlie01', 'charlie@example.com', 'passcharlie')
+      user = UserRepository.find_by_email('charlie@example.com')
+      UserRepository.update_photo(user.id, 'https://newphoto.url')
+  
+      updated_user = UserRepository.find_by_email('charlie@example.com')
+      expect(updated_user.profile_photo_url).to eq('https://newphoto.url')
+    end
+  end
+  
+  context '.update_bio' do
+    it 'updates the user bio' do
+      UserRepository.create('David', 'david01', 'david@example.com', 'passdavid')
+      user = UserRepository.find_by_email('david@example.com')
+      UserRepository.update_bio(user.id, 'Updated Bio for David')
+  
+      updated_user = UserRepository.find_by_email('david@example.com')
+      expect(updated_user.bio).to eq('Updated Bio for David')
+    end
+  end
+  
 end
