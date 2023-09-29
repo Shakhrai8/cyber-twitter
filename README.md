@@ -34,10 +34,6 @@ The JavaScript version focuses on the frontend and utilizes the provided backend
 
 ![](./public/cyber_screenshots.png)
 
-## Deployment
-
-The CyberTwitter application is deployed and can be accessed at [https://cybertwitter.onrender.com](https://cybertwitter.onrender.com) on Render.
-
 ## Local Development
 
 To run CyberTwitter locally, follow the instructions below:
